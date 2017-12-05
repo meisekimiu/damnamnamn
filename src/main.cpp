@@ -28,8 +28,40 @@ void parseArgs(int argc, char** argv) {
 	}
 }
 
+void errCheck(FMOD_RESULT result)
+{
+	if (result != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", result, FMOD_ErrorString(result));
+		exit(-1);
+	}
+	return;
+}
+
+FMOD::System* soundInit(int channels)
+{
+	FMOD::System *system;
+	FMOD_RESULT result = FMOD::System_Create(&system);
+	errCheck(result);
+	result = system->init(channels, FMOD_INIT_NORMAL,0);
+	errCheck(result);
+	return system;
+}
+
+void soundTest(FMOD::System *system) {
+	int recordingSources = 0;
+	FMOD_RESULT result = system->getRecordNumDrivers(&recordingSources);
+	errCheck(result);
+	for(int i = 0; i < recordingSources; i++) {
+		char name[256];
+		system->getRecordDriverInfo(i, name, 256, 0);
+		printf("%d. %s\n",i,name);
+	}
+	printf("Drivers: %d\n",recordingSources);
+}
 
 int main(int argc, char** argv)
 {
 	parseArgs(argc,argv);
+	soundTest(soundInit(32));
 }
