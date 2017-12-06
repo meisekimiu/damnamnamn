@@ -9,7 +9,9 @@
 #include "RecordingDevice.h"
 
 #define ARG_EQUAL(val) strcmp(argv[i],val)==0
-#define VERSION_NUMBER "2017-12-05--wip"
+#define VERSION_LABEL "wip"
+#define STRING(s) #s
+#define MAKE_STRING(s) STRING(s)
 
 void parseArgs(int argc, char** argv) {
 	for(int i = 1; i < argc; i++) {
@@ -24,7 +26,7 @@ void parseArgs(int argc, char** argv) {
 			exit(EXIT_SUCCESS);
 		}
 		if(ARG_EQUAL("-v")||ARG_EQUAL("--version")) {
-			printf("Karaoke @ DAMN! Signal Processor. Version %s. Konomi is best idol.\n",VERSION_NUMBER);
+			printf("Karaoke @ DAMN! Signal Processor.\nVersion %s-%s-%s.\n\nKonomi is best idol.\n",MAKE_STRING(GIT_COMMIT_HASH),VERSION_LABEL,MAKE_STRING(GIT_BRANCH));
 			exit(EXIT_SUCCESS);
 		}
 	}
