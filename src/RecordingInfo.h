@@ -3,14 +3,14 @@
 #include <cstring>
 FMOD_CREATESOUNDEXINFO getSoundInfo() {
 	int sampleRate = 44100;
-	int channels = 2;
+	int channels = 1;
 	FMOD_CREATESOUNDEXINFO soundInfo;
 	memset(&soundInfo, 0, sizeof(FMOD_CREATESOUNDEXINFO));
 	soundInfo.cbsize            = sizeof(FMOD_CREATESOUNDEXINFO);
 
 	// The length of the entire sample in bytes, calculated as:
 	// Sample rate * number of channels * bits per sample per channel * number of seconds
-	soundInfo.length            = sampleRate * channels * sizeof(unsigned short) * 0.05;
+	soundInfo.length            = 2048; //sampleRate * channels * sizeof(unsigned short) * 0.05;
 
 	// Number of channels and sample rate
 	soundInfo.numchannels       = channels;

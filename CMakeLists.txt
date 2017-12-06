@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(DAMNAMNAMN)
 
-add_executable(damnamnamn src/main.cpp src/RecordingDevice.cpp)
+add_executable(damnamnamn src/main.cpp src/RecordingDevice.cpp src/PlaybackManager.cpp src/PlaybackChannel.cpp)
 
 # Get the current working branch
 execute_process(

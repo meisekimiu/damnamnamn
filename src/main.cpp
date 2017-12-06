@@ -7,6 +7,7 @@
 #include "../inc/fmod/inc/fmod.hpp"
 #include "../inc/fmod/inc/fmod_errors.h"
 #include "RecordingDevice.h"
+#include "PlaybackManager.h"
 
 #define ARG_EQUAL(val) strcmp(argv[i],val)==0
 #define VERSION_LABEL "wip"
@@ -57,19 +58,22 @@ void soundTest(FMOD::System *system) {
 	FMOD_RESULT result = system->getRecordNumDrivers(&recordingSources);
 	errCheck(result);
 	for(int i = 0; i < recordingSources; i++) {
-		RecordingDevice* d = new RecordingDevice(system,i);
+		RecordingDevice* d = new RecordingDevice(i);
 		printf("%d. %s\n",d->getIndex(),d->getName());
 		delete d;
 	}
 	printf("Drivers: %d\n",recordingSources);
-	RecordingDevice* device = new RecordingDevice(system,2);
-	device->recordStart();
-	usleep(200);
-	FMOD::Channel* channel;
-	system->playSound(FMOD_CHANNEL_FREE,device->getSound(),false,&channel);
-	sleep(20);
-	device->recordStop();
-	delete device;
+	RecordingDevice* device = new RecordingDevice(4);
+	RecordingDevice* device_b = new RecordingDevice(2);
+	PlaybackManager* karaoke = new PlaybackManager();
+	karaoke->addRecordingDevice(device_b);
+	karaoke->addRecordingDevice(device);
+	karaoke->startPlayback();
+	while(true) {
+		system->update();
+	}
+	delete karaoke;
+
 }
 
 int main(int argc, char** argv)

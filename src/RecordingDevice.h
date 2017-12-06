@@ -6,10 +6,11 @@
 
 class RecordingDevice {
 public:
-	RecordingDevice(FMOD::System *system,int index);
+	RecordingDevice(int index);
 	~RecordingDevice();
 	char* getName();
 	int getIndex();
+	FMOD::System* getSystem();
 	FMOD::Sound* getSound();
 	FMOD_RESULT recordStart();
 	FMOD_RESULT recordStop();

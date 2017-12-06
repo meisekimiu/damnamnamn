@@ -3,8 +3,10 @@
 #include <cstring>
 #include <stdio.h>
 
-RecordingDevice::RecordingDevice(FMOD::System* system,int index) {
-	this->system = system;
+RecordingDevice::RecordingDevice(int index) {
+	// this->system = system;
+	FMOD_RESULT result = FMOD::System_Create(&system);
+	result = system->init(32, FMOD_INIT_NORMAL,0);
 	driver_index = index;
 	char temp[256];
 	system->getRecordDriverInfo(index, temp, 256, 0);
@@ -18,6 +20,7 @@ RecordingDevice::RecordingDevice(FMOD::System* system,int index) {
 RecordingDevice::~RecordingDevice() {
 	delete name;
 	sound->release();
+	system->release();
 }
 
 char* RecordingDevice::getName() {
@@ -26,6 +29,10 @@ char* RecordingDevice::getName() {
 
 int RecordingDevice::getIndex() {
 	return driver_index;
+}
+
+FMOD::System* RecordingDevice::getSystem() {
+	return system;
 }
 
 FMOD::Sound* RecordingDevice::getSound() {
