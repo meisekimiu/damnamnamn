@@ -70,7 +70,7 @@ void soundTest(FMOD::System *system) {
 	karaoke->addRecordingDevice(device);
 	karaoke->startPlayback();
 	while(true) {
-		system->update();
+		karaoke->update();
 	}
 	delete karaoke;
 
